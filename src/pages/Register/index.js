@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { Formik, Form, Field } from 'formik'
-import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { Link, Redirect } from 'react-router-dom'
 
-export const LoginPageWrapper = styled.div`
+import { RegisterUser } from '../../modules/register/actions'
+
+export const RegisterPageWrapper = styled.div`
   display: flex;
   justify-content: center;
   min-height: 100vh;
@@ -12,11 +14,11 @@ export const LoginPageWrapper = styled.div`
   flex-direction: column;
   background-color: '#FAF9FF';
 `
-const FormStyled = styled(Form)`
+const FormStyled = styled.form`
   width: 30%;
   margin: 20px;
 `
-const FieldStyled = styled(Field)`
+const FieldStyled = styled.input`
   padding: 20px;
   display: block;
   border-radius: 5px;
@@ -64,42 +66,89 @@ const ButtonStyled = styled.button`
 `
 
 class Register extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      userName: '',
+      email: '',
+      password: ''
+    }
+  }
+  Submit(e) {
+    e.preventDefault()
+    this.props.RegisterUser(this.state)
+  }
   render() {
     return (
-      <LoginPageWrapper>
+      <RegisterPageWrapper>
+        {this.props.data.hasError ? <h1>{this.props.data.message}</h1> : ''}
         <h1>Task Register</h1>
-        <Formik>
-          <FormStyled>
-            <FieldStyled
-              type="text"
-              name="name"
-              placeholder="please input youre user name"
-            />
-            <FieldStyled
-              type="email"
-              name="email"
-              placeholder="please input youre email"
-            />
-            <FieldStyled
-              type="password"
-              name="password"
-              placeholder="please input youre password"
-            />
-            <Link to="/register" style={{ textDecoration: 'none' }}>
-              <ButtonRegister> Register</ButtonRegister>
-            </Link>
+        <FormStyled
+          onSubmit={event => {
+            this.Submit(event)
+          }}
+        >
+          <FieldStyled
+            type="text"
+            name="userName"
+            value={this.state.userName}
+            onChange={event => {
+              this.setState({
+                userName: event.target.value
+              })
+            }}
+            placeholder="please input youre user name"
+          />
+          <FieldStyled
+            type="text"
+            name="email"
+            value={this.state.email}
+            onChange={event => {
+              this.setState({
+                email: event.target.value
+              })
+            }}
+            placeholder="please input youre email"
+          />
+          <FieldStyled
+            type="password"
+            name="password"
+            value={this.state.password}
+            onChange={event => {
+              this.setState({
+                password: event.target.value
+              })
+            }}
+            placeholder="please input youre password"
+          />
 
-            <p style={{ textAlign: 'center' }}>
-              Already account? <span>please Login</span>{' '}
-            </p>
-            <Link to="/login" style={{ textDecoration: 'none' }}>
-              <ButtonStyled>Login</ButtonStyled>
-            </Link>
-          </FormStyled>
-        </Formik>
-      </LoginPageWrapper>
+          <ButtonRegister> Register</ButtonRegister>
+
+          <p style={{ textAlign: 'center' }}>
+            Already account? <span>please Login</span>{' '}
+          </p>
+          <Link to="/login" style={{ textDecoration: 'none' }}>
+            <ButtonStyled>Login</ButtonStyled>
+          </Link>
+        </FormStyled>
+      </RegisterPageWrapper>
     )
   }
 }
 
-export default Register
+const mapStateToProps = state => (
+  console.log(state.register),
+  {
+    message: state.register.message,
+    data: state.register
+  }
+)
+
+const mapDispatchToProps = {
+  RegisterUser
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Register)

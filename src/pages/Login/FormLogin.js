@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import { userLogin } from '../../modules/user/actions'
 
@@ -56,19 +56,55 @@ class FormLogin extends React.Component {
   constructor() {
     super()
     this.state = {
-      email: 'admin@gmail.com',
-      password: '1234567'
+      email: '',
+      password: ''
     }
   }
-  componentDidMount() {
+  submit() {
+    console.log(this.state)
+
+    this.setState({
+      email: this.state.email,
+      password: this.state.password
+    })
     this.props.userLogin(this.state)
   }
+
   render() {
-    return (
+    // console.log(this.props.user.isAuthorized)
+
+    return this.props.user.isAuthorized ? (
+      <Redirect to="/" />
+    ) : (
       <FormLoginStyled>
-        <FormStyled>
-          <FieldStyled type="email" name="email" placeholder="email" />
-          <FieldStyled type="password" name="password" placeholder="password" />
+        <FormStyled
+          onSubmit={event => {
+            event.preventDefault()
+            this.submit()
+          }}
+        >
+          <FieldStyled
+            type="email"
+            name="email"
+            value={this.state.email}
+            onChange={event => {
+              this.setState({
+                email: event.target.value
+              })
+            }}
+            placeholder="email"
+          />
+          <FieldStyled
+            type="password"
+            name="password"
+            value={this.state.password}
+            onChange={event => {
+              this.setState({
+                password: event.target.value
+              })
+            }}
+            placeholder="password"
+          />
           <ButtonStyled>Login</ButtonStyled>
           <p style={{ textAlign: 'center' }}>Does not have an account yet? </p>
           <Link to="/register" style={{ textDecoration: 'none' }}>
@@ -80,12 +116,9 @@ class FormLogin extends React.Component {
   }
 }
 
-const mapStateToProps = state => (
-  console.log(state),
-  {
-    user: state
-  }
-)
+const mapStateToProps = state => ({
+  user: state.user
+})
 const mapDispatchToProps = {
   userLogin
 }
