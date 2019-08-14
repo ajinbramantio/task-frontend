@@ -24,14 +24,27 @@ const FieldStyled = styled(Field)`
   width: 100%;
   margin: 1em 0;
   box-sizing: border-box;
+  outline: none;
 
   &::placeholder {
     font-style: italic;
     font-size: 15px;
     color: #2f2f2f;
-    font-weight: 600;
   }
 `
+
+const ButtonRegister = styled.button`
+  margin-top: 50px;
+  background-color: #d81e5b;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  width: 100%;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #faf9ff;
+`
+
 const ButtonStyled = styled.button`
   padding: 20px;
   display: block;
@@ -44,37 +57,43 @@ const ButtonStyled = styled.button`
   font-size: 18px;
   font-weight: 800;
   color: #faf9ff;
-`
-const ButtonRegister = styled.button`
-  background-color: #d81e5b;
-  border: 1px solid #eee;
-  border-radius: 5px;
-  width: 100%;
-  padding: 20px;
-  font-size: 18px;
-  font-weight: 800;
-  color: #faf9ff;
+
+  &::placeholder {
+    font-style: italic;
+  }
 `
 
-class Login extends React.Component {
+class Register extends React.Component {
   render() {
     return (
       <LoginPageWrapper>
-        <h1>Task Login</h1>
+        <h1>Task Register</h1>
         <Formik>
           <FormStyled>
-            <FieldStyled type="email" name="email" placeholder="email" />
+            <FieldStyled
+              type="text"
+              name="name"
+              placeholder="please input youre user name"
+            />
+            <FieldStyled
+              type="email"
+              name="email"
+              placeholder="please input youre email"
+            />
             <FieldStyled
               type="password"
               name="password"
-              placeholder="password"
+              placeholder="please input youre password"
             />
-            <ButtonStyled>Login</ButtonStyled>
-            <p style={{ textAlign: 'center' }}>
-              Does not have an account yet?{' '}
-            </p>
             <Link to="/register" style={{ textDecoration: 'none' }}>
               <ButtonRegister> Register</ButtonRegister>
+            </Link>
+
+            <p style={{ textAlign: 'center' }}>
+              Already account? <span>please Login</span>{' '}
+            </p>
+            <Link to="/login" style={{ textDecoration: 'none' }}>
+              <ButtonStyled>Login</ButtonStyled>
             </Link>
           </FormStyled>
         </Formik>
@@ -83,4 +102,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login
+export default Register
