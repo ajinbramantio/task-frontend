@@ -9,7 +9,7 @@ export const LoginPageWrapper = styled.div`
   height: 100%;
   align-items: center;
   flex-direction: column;
-  background-color: '#FAF9FF';
+  background-color: #faf9ff;
 `
 
 class Login extends React.Component {

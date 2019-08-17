@@ -2,6 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import Styled from '@emotion/styled'
+import AddTask from './AddTask'
+
+import Table from './Table'
 
 const HomePage = Styled.div`
  display: flex;
@@ -17,14 +20,14 @@ const HeaderHome = Styled.div`
   width:100%;
 `
 const HeaderLeft = Styled.div`
-  margin-left:5%;
+  
   width:50%;
 `
 const HeaderRight = Styled.div`
   width:50%;
 `
 const RightDiv = Styled.div`
-  width:80%;
+  width:100%;
   display:flex;
   justify-content:flex-end;
 `
@@ -55,50 +58,26 @@ const LogoutButton = Styled.button`
   color:#faf9ff;
   border-radius:7px;
 `
-const PopupStyled = Styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  background-color: rgba(0,0,0, 0.5);
-`
-const PopupInner = Styled.div`
-position: absolute;
-  left: 25%;
-  right: 25%;
-  top: 25%;
-  bottom: 25%;
-  margin: auto;
-  background: white;
-`
 
 class Home extends React.Component {
-  constructor() {
+  constructor(props) {
     super()
     this.state = {
-      showPopup: '',
+      showPopup: props.showPopup,
       close: ''
     }
   }
   togglePopup() {
-    console.log('aaa')
+    console.log(!this.state.showPopup)
 
     this.setState({
-      showPopup: !this.state.showPopup,
-      close: 'close me'
+      showPopup: !this.state.showPopup
     })
   }
-  Popup() {
-    this.setState({
-      showPopup: '',
-      close: 'close me'
-    })
-  }
+
   render() {
+    console.log(this.props)
+
     return (
       <HomePage>
         {!localStorage.AUTH_TOKEN ? <Redirect to="/login" /> : ''}
@@ -117,36 +96,20 @@ class Home extends React.Component {
           </HeaderRight>
         </HeaderHome>
         {this.state.showPopup ? (
-          <PopupStyled>
-            <PopupInner>
-              <h1>hihi</h1>
-              <hr />
-
-              {/* <h1>{this.props.text}</h1> */}
-              <button
-                onClick={e => {
-                  e.preventDefault()
-                  this.Popup()
-                }}
-                text="Close Me"
-
-                // closePopup={this.togglePopup.bind(this)}
-              >
-                close
-              </button>
-            </PopupInner>
-          </PopupStyled>
+          <AddTask showPopup={this.props.showPopup} />
         ) : null}
+        <Table />
       </HomePage>
     )
   }
 }
 
 const mapStateToProps = state => {
-  console.log(state)
+  //   console.log(state.task.showPopupAdd)
 
   return {
-    login: state.user
+    login: state.user,
+    showPopup: state.task.showPopupAdd
   }
 }
 

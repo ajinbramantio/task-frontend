@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { connect } from 'react-redux'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { RegisterUser } from '../../modules/register/actions'
 
@@ -71,7 +71,8 @@ class Register extends React.Component {
     this.state = {
       userName: '',
       email: '',
-      password: ''
+      password: '',
+      message: ''
     }
   }
   Submit(e) {
@@ -91,14 +92,27 @@ class Register extends React.Component {
           <FieldStyled
             type="text"
             name="userName"
+            maxLength="32"
             value={this.state.userName}
             onChange={event => {
+              const { value, maxLength } = event.target
+              console.log(value.length)
+
+              if (value.length >= 32) {
+                this.setState({
+                  userName: event.target.value,
+                  message: 'max Length ' + maxLength
+                })
+              }
+
               this.setState({
                 userName: event.target.value
               })
             }}
             placeholder="please input youre user name"
           />
+
+          {!this.state.message ? '' : <p>{this.state.message}</p>}
           <FieldStyled
             type="text"
             name="email"
@@ -136,13 +150,10 @@ class Register extends React.Component {
   }
 }
 
-const mapStateToProps = state => (
-  console.log(state.register),
-  {
-    message: state.register.message,
-    data: state.register
-  }
-)
+const mapStateToProps = state => ({
+  message: state.register.message,
+  data: state.register
+})
 
 const mapDispatchToProps = {
   RegisterUser
