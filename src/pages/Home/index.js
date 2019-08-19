@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import Styled from '@emotion/styled'
 import AddTask from './AddTask'
+import { Add_Task } from '../../modules/task/actions'
 
 import Table from './Table'
 
@@ -17,7 +18,8 @@ const HomePage = Styled.div`
 const HeaderHome = Styled.div`
   display:flex;
   margin-top:100px;
-  width:100%;
+  margin-left: 20%;
+  width:60%;
 `
 const HeaderLeft = Styled.div`
   
@@ -38,6 +40,7 @@ const AddTaskButton = Styled.button`
   font-weight: 800;
   color:#faf9ff;
   border-radius:7px;
+  cursor:pointer;
 `
 const UserName = Styled.span`
     margin-right:5%;
@@ -57,31 +60,24 @@ const LogoutButton = Styled.button`
   font-weight: 800;
   color:#faf9ff;
   border-radius:7px;
+  cursor:pointer;
 `
 
 class Home extends React.Component {
-  constructor(props) {
-    super()
-    this.state = {
-      showPopup: props.showPopup,
-      close: ''
-    }
-  }
   togglePopup() {
-    console.log(!this.state.showPopup)
-
-    this.setState({
-      showPopup: !this.state.showPopup
-    })
+    // console.log(this.props.showPopup)
+    if (this.props.showPopup === false) {
+      const dataAddTask = {
+        showPopup: !this.props.showPopup
+      }
+      this.props.dispatch(Add_Task(dataAddTask))
+    }
   }
 
   render() {
-    console.log(this.props)
-
     return (
       <HomePage>
         {!localStorage.AUTH_TOKEN ? <Redirect to="/login" /> : ''}
-
         <HeaderHome>
           <HeaderLeft>
             <AddTaskButton onClick={this.togglePopup.bind(this)}>
@@ -95,9 +91,8 @@ class Home extends React.Component {
             </RightDiv>
           </HeaderRight>
         </HeaderHome>
-        {this.state.showPopup ? (
-          <AddTask showPopup={this.props.showPopup} />
-        ) : null}
+        {/* {console.log(this.props.showPopup)} */}
+        {this.props.showPopup ? <AddTask /> : null}
         <Table />
       </HomePage>
     )
@@ -105,7 +100,7 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => {
-  //   console.log(state.task.showPopupAdd)
+  //   console.log(state.task.showPopup)
 
   return {
     login: state.user,

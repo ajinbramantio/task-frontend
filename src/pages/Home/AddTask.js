@@ -1,6 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Styled from '@emotion/styled'
+import { Add_Task } from '../../modules/task/actions'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const PopupStyled = Styled.div`
   position: fixed;
@@ -10,74 +13,155 @@ const PopupStyled = Styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  overflow:auto;
   margin: auto;
   background-color: rgba(0,0,0, 0.5);
 `
 const PopupInner = Styled.div`
-position: absolute;
+  position: absolute;
+  width:40%;
   left: 25%;
   right: 25%;
-  top: 25%;
-  bottom: 25%;
+  top: 15%;
+  bottom: 60%;
   margin: auto;
   background: white;
+
+`
+const ButtonX = Styled.button`
+  position:absolute;
+  padding:20px 30px;
+  right:0;
+  font-size: 18px;
+  cursor:pointer;
+`
+const FieldWrapper = Styled.div`
+  margin-bottom: 10px;
+`
+const InputText = Styled.input`
+  margin-top: 10px;
+  display: block;
+  padding: 10px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+`
+
+const InputDate = Styled(DatePicker)`
+ 
+  display: block;
+  padding: 10px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+`
+const CreateButton = Styled.button`
+  margin:20px 20px 20px 0px;
+  padding:10px 20px;
+  background-color:#2EC4B6;
+  font-size: 16px;
+  font-weight: 800;
+  color:#faf9ff;
+  border-radius:7px;
+  cursot:pointer;
+`
+const CancelButton = Styled.button`
+  margin:20px 20px 20px 0px;
+  padding:10px 20px;
+  background-color:#E71D36;
+  font-size: 16px;
+  font-weight: 800;
+  color:#faf9ff;
+  border-radius:7px;
+  cursor:pointer;
+  
 `
 class AddTask extends React.Component {
-  constructor() {
-    // console.log(props)
+  constructor(props) {
+    super(props)
 
-    super()
+    // const chooseDate = `${new Date.getDate()}/${new Date.getMonth()}, ${new Date.getFullYear()}`
     this.state = {
-      showPopup: false,
-      close: ''
+      startDate: new Date()
     }
+    this.handleChange = this.handleChange.bind(this)
   }
 
   Popup() {
-    // console.log('aaa')
-    // this.props.AddTaskPopup
+    // console.log(this.props.showPopup)
+    if (this.props.showPopup === true) {
+      const dataAddTask = {
+        showPopup: !this.props.showPopup
+      }
+      this.props.dispatch(Add_Task(dataAddTask))
+    }
+  }
+  handleChange(date) {
+    // console.log(date)
+    // console.log(date)
 
     this.setState({
-      showPopup: '',
-      close: 'close me'
+      startDate: date
     })
-    // console.log(this.state)
   }
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
 
     return (
       <React.Fragment>
         <PopupStyled>
           <PopupInner>
-            <h2>Create Task</h2>
-            <hr />
-            <div>
-              <form>
-                <div>
-                  <label htmlFor="">Name</label>
-                  <input type="text" name="" id="" />
-                </div>
-                <div>
-                  <label htmlFor="">Email</label>
-                  <input type="text" name="" id="" />
-                </div>
-                <div>
-                  <label htmlFor="">Items</label>
-                  <input type="text" name="" id="" />
-                </div>
-                <div>
-                  <label htmlFor="">Price</label>
-                  <input type="text" name="" id="" />
-                </div>
-                <div>
-                  <label htmlFor="">Date</label>
-                  <input type="datetime" name="" id="" />
-                </div>
+            <ButtonX
+              onClick={() => {
+                this.Popup()
+              }}
+            >
+              X
+            </ButtonX>
+            <div
+              style={{
+                padding: '1px 24px',
+                borderBottom: '1px solid #e8e8e8'
+              }}
+            >
+              <h3>Create Task</h3>
+            </div>
 
-                <button>Create</button>
-                <button
+            <div style={{ padding: '24px', backgroundColor: 'white' }}>
+              <form style={{ width: '95%' }}>
+                <FieldWrapper>
+                  <label htmlFor="">Name :</label>
+                  <InputText type="text" name="" placeholder="input Name" />
+                </FieldWrapper>
+                <FieldWrapper>
+                  <label htmlFor="">Email :</label>
+                  <InputText type="text" name="" placeholder="input Email" />
+                </FieldWrapper>
+                <FieldWrapper>
+                  <label htmlFor="">Items :</label>
+                  <InputText type="text" name="" placeholder="input Items" />
+                </FieldWrapper>
+                <FieldWrapper>
+                  <label htmlFor="">Price :</label>
+                  <InputText type="text" name="" placeholder="input Price" />
+                </FieldWrapper>
+                <FieldWrapper>
+                  <label htmlFor="">Date :</label>
+
+                  <InputDate
+                    dateFormat="dd/MM/yyyy"
+                    selected={this.state.startDate}
+                    onChange={this.handleChange}
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                  />
+                </FieldWrapper>
+
+                <CreateButton>Create</CreateButton>
+                <CancelButton
                   onClick={() => {
                     this.Popup()
                   }}
@@ -86,7 +170,7 @@ class AddTask extends React.Component {
                   // closePopup={this.togglePopup.bind(this)}
                 >
                   close
-                </button>
+                </CancelButton>
               </form>
             </div>
           </PopupInner>
@@ -96,7 +180,7 @@ class AddTask extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  // console.log(state.task)
+  // console.log(state)
 
   return {
     data: state.task.data,

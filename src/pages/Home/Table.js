@@ -1,5 +1,8 @@
 import React from 'react'
 import Styled from '@emotion/styled'
+import { connect } from 'react-redux'
+import { Edit_Task } from '../../modules/task/actions'
+import TASKEDIT from './EditTask'
 
 const Content = Styled.div`
     width:100%;
@@ -44,17 +47,30 @@ const ButtonEdit = Styled.button`
      font-size: 14px;
     font-weight: 600;
     color:#faf9ff;
+    cursor:pointer;
 `
 const ButtonDelete = Styled.button`
     padding:10px 20px;
     border-radius:7px;
     background:#D90429;
-     font-size: 14px;
-  font-weight: 600;
+    font-size: 14px;
+    font-weight: 600;
     color:#faf9ff;
+    cursor:pointer;
 `
 class Table extends React.Component {
+  tooglePopupEdit() {
+    // console.log(this.props)
+    if (this.props.showPopup === false) {
+      const dataTaskEdit = {
+        showPopup: !this.props.showPopup
+      }
+      this.props.dispatch(Edit_Task(dataTaskEdit))
+    }
+  }
   render() {
+    // console.log(this.props)
+
     return (
       <Content>
         <Tables>
@@ -62,10 +78,10 @@ class Table extends React.Component {
             <Tr>
               <Th>No</Th>
               <Th>Name</Th>
-              <Th>email</Th>
-              <Th>barang</Th>
-              <Th>price</Th>
-              <Th>date</Th>
+              <Th>Email</Th>
+              <Th>Items</Th>
+              <Th>Price</Th>
+              <Th>Date</Th>
               <Th colSpan="2" style={{ textAlign: 'center' }}>
                 action
               </Th>
@@ -80,21 +96,13 @@ class Table extends React.Component {
               <Td>Rp. 1.000.000</Td>
               <Td>12-12-2020</Td>
               <Td>
-                <ButtonEdit>Edit</ButtonEdit>
-              </Td>
-              <Td>
-                <ButtonDelete>Delete</ButtonDelete>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>2</Td>
-              <Td>raga</Td>
-              <Td>raga@gmail.com</Td>
-              <Td>sepatu</Td>
-              <Td>Rp. 10.000.000</Td>
-              <Td>12-12-2020</Td>
-              <Td>
-                <ButtonEdit>Edit</ButtonEdit>
+                <ButtonEdit
+                  onClick={() => {
+                    this.tooglePopupEdit()
+                  }}
+                >
+                  Edit
+                </ButtonEdit>
               </Td>
               <Td>
                 <ButtonDelete>Delete</ButtonDelete>
@@ -102,9 +110,18 @@ class Table extends React.Component {
             </Tr>
           </tbody>
         </Tables>
+        {/* {console.log(this.props.showPopup)} */}
+        {this.props.showPopup ? <TASKEDIT /> : null}
       </Content>
     )
   }
 }
 
-export default Table
+const maStateToProps = state => {
+  //   console.log(state.task.showPopupEdit)
+
+  return {
+    showPopup: state.task.showPopupEdit
+  }
+}
+export default connect(maStateToProps)(Table)

@@ -41,6 +41,7 @@ const ButtonStyled = styled.button`
   font-size: 18px;
   font-weight: 800;
   color: #faf9ff;
+  cursor: pointer;
 `
 const ButtonRegister = styled.button`
   background-color: #d81e5b;
@@ -51,6 +52,7 @@ const ButtonRegister = styled.button`
   font-size: 18px;
   font-weight: 800;
   color: #faf9ff;
+  cursor: pointer;
 `
 class FormLogin extends React.Component {
   constructor() {
@@ -61,7 +63,7 @@ class FormLogin extends React.Component {
     }
   }
   submit() {
-    console.log(this.state)
+    // console.log(this.state)
 
     this.setState({
       email: this.state.email,
