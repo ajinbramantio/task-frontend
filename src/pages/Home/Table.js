@@ -5,10 +5,12 @@ import { Edit_Task } from '../../modules/task/actions'
 import TASKEDIT from './EditTask'
 
 const Content = Styled.div`
-    width:100%;
+    width:70%;
     min-height:100vh;
     height:100%;
     margin-top:50px;
+    margin-left:15%;
+    overflow-x: scroll;
 `
 // display: flex;
 // justify - content: center;
@@ -22,6 +24,8 @@ const Tables = Styled.table`
    justify-content:center;
    align-items:center;
    border-collapse: collapse;
+   width:max-content;
+   
    
    /* flex-direction:column; */
 `
@@ -36,7 +40,7 @@ const Th = Styled.th`
 `
 const Td = Styled.th`
     padding:20px;
-    text-align:left;
+    text-align:center;
     color:#8D99AE;
     color: #2B2D42;
 `
@@ -78,9 +82,10 @@ class Table extends React.Component {
             <Tr>
               <Th>No</Th>
               <Th>Name</Th>
-              <Th>Email</Th>
               <Th>Items</Th>
+              <Th>Total items</Th>
               <Th>Price</Th>
+              <Th>Total Price</Th>
               <Th>Date</Th>
               <Th colSpan="2" style={{ textAlign: 'center' }}>
                 action
@@ -90,10 +95,11 @@ class Table extends React.Component {
           <tbody>
             <Tr>
               <Td>1</Td>
-              <Td>ajin</Td>
-              <Td>ajin@gmail.com</Td>
+              <Td>fadhila fajri bramantio</Td>
               <Td>sepatu</Td>
+              <Td>2</Td>
               <Td>Rp. 1.000.000</Td>
+              <Td>Rp. 2.000.000</Td>
               <Td>12-12-2020</Td>
               <Td>
                 <ButtonEdit

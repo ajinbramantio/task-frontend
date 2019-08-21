@@ -132,24 +132,55 @@ class AddTask extends React.Component {
               <form style={{ width: '95%' }}>
                 <FieldWrapper>
                   <label htmlFor="">Name :</label>
-                  <InputText type="text" name="" placeholder="input Name" />
+                  <InputText
+                    type="text"
+                    name=""
+                    placeholder="input Name"
+                    required
+                  />
                 </FieldWrapper>
-                <FieldWrapper>
-                  <label htmlFor="">Email :</label>
-                  <InputText type="text" name="" placeholder="input Email" />
-                </FieldWrapper>
+
                 <FieldWrapper>
                   <label htmlFor="">Items :</label>
-                  <InputText type="text" name="" placeholder="input Items" />
+                  <InputText
+                    type="text"
+                    name=""
+                    placeholder="input Items"
+                    required
+                  />
+                </FieldWrapper>
+                <FieldWrapper>
+                  <label htmlFor="">Total Items :</label>
+                  <InputText
+                    type="text"
+                    name=""
+                    placeholder="input Items"
+                    required
+                  />
                 </FieldWrapper>
                 <FieldWrapper>
                   <label htmlFor="">Price :</label>
-                  <InputText type="text" name="" placeholder="input Price" />
+                  <InputText
+                    type="text"
+                    name=""
+                    placeholder="input Price"
+                    required
+                  />
+                </FieldWrapper>
+                <FieldWrapper>
+                  <label htmlFor="">Total Price :</label>
+                  <InputText
+                    type="text"
+                    name=""
+                    placeholder="input Price"
+                    required
+                  />
                 </FieldWrapper>
                 <FieldWrapper>
                   <label htmlFor="">Date :</label>
 
                   <InputDate
+                    type="date"
                     dateFormat="dd/MM/yyyy"
                     selected={this.state.startDate}
                     onChange={this.handleChange}

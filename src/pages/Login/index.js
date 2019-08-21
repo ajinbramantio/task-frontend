@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import FormLogin from './FormLogin'
+import { Redirect } from 'react-router-dom'
 
 export const LoginPageWrapper = styled.div`
   display: flex;
@@ -14,8 +15,11 @@ export const LoginPageWrapper = styled.div`
 
 class Login extends React.Component {
   render() {
+    // console.log(localStorage.AUTH_TOKEN ? 'benar' : 'salah')
+
     return (
       <LoginPageWrapper>
+        {localStorage.AUTH_TOKEN ? <Redirect to="/" /> : null}
         <h1>Task Login</h1>
         <FormLogin />
       </LoginPageWrapper>

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import { RegisterUser } from '../../modules/register/actions'
 
@@ -82,6 +82,7 @@ class Register extends React.Component {
   render() {
     return (
       <RegisterPageWrapper>
+        {localStorage.AUTH_TOKEN ? <Redirect to="/" /> : null}
         {this.props.data.hasError ? <h1>{this.props.data.message}</h1> : ''}
         <h1>Task Register</h1>
         <FormStyled

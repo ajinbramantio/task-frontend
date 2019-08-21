@@ -108,16 +108,21 @@ class EditTask extends React.Component {
                   <label htmlFor="">Name :</label>
                   <InputText type="text" name="" placeholder="input Name" />
                 </FieldWrapper>
-                <FieldWrapper>
-                  <label htmlFor="">Email :</label>
-                  <InputText type="text" name="" placeholder="input Email" />
-                </FieldWrapper>
+
                 <FieldWrapper>
                   <label htmlFor="">Items :</label>
                   <InputText type="text" name="" placeholder="input Items" />
                 </FieldWrapper>
                 <FieldWrapper>
+                  <label htmlFor="">Total Items :</label>
+                  <InputText type="text" name="" placeholder="input Items" />
+                </FieldWrapper>
+                <FieldWrapper>
                   <label htmlFor="">Price :</label>
+                  <InputText type="text" name="" placeholder="input Price" />
+                </FieldWrapper>
+                <FieldWrapper>
+                  <label htmlFor="">Total Price :</label>
                   <InputText type="text" name="" placeholder="input Price" />
                 </FieldWrapper>
                 <FieldWrapper>
