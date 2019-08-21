@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom'
 import Styled from '@emotion/styled'
 import AddTask from './AddTask'
 import { Add_Task } from '../../modules/task/actions'
+import { LogoutUser } from '../../modules/user/actions'
 
 import Table from './Table'
 
@@ -75,9 +76,12 @@ class Home extends React.Component {
   }
 
   render() {
+    // console.log(!this.props.user.token, !localStorage.AUTH_TOKEN)
+
     return (
       <HomePage>
         {!localStorage.AUTH_TOKEN ? <Redirect to="/login" /> : ''}
+        {/* {!this.props.user.token ? <Redirect to="/login"/> : ''} */}
         <HeaderHome>
           <HeaderLeft>
             <AddTaskButton onClick={this.togglePopup.bind(this)}>
@@ -87,7 +91,16 @@ class Home extends React.Component {
           <HeaderRight>
             <RightDiv>
               <UserName>username</UserName>
-              <LogoutButton>Logout</LogoutButton>
+              <LogoutButton
+                onClick={async () => {
+                  // console.log(this.props.history.push('/login'))
+
+                  await this.props.dispatch(LogoutUser())
+                  this.props.history.push('/login')
+                }}
+              >
+                Logout
+              </LogoutButton>
             </RightDiv>
           </HeaderRight>
         </HeaderHome>
@@ -100,10 +113,10 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => {
-  //   console.log(state.task.showPopup)
+  console.log(state.user)
 
   return {
-    login: state.user,
+    user: state.user,
     showPopup: state.task.showPopupAdd
   }
 }

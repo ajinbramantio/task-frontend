@@ -12,6 +12,10 @@ export const LoginPageWrapper = styled.div`
   flex-direction: column;
   background-color: #faf9ff;
 `
+const Title = styled.div`
+  margin-left: 35px;
+  text-align: center;
+`
 
 class Login extends React.Component {
   render() {
@@ -20,7 +24,9 @@ class Login extends React.Component {
     return (
       <LoginPageWrapper>
         {localStorage.AUTH_TOKEN ? <Redirect to="/" /> : null}
-        <h1>Task Login</h1>
+        <Title>
+          <h1>Task Login</h1>
+        </Title>
         <FormLogin />
       </LoginPageWrapper>
     )

@@ -73,7 +73,7 @@ class FormLogin extends React.Component {
   }
 
   render() {
-    // console.log(this.props.user.isAuthorized)
+    console.log(this.props.user.data)
 
     return this.props.user.isAuthorized ? (
       <Redirect to="/" />
@@ -85,6 +85,19 @@ class FormLogin extends React.Component {
             this.submit()
           }}
         >
+          {this.props.user.data.message ? (
+            <p
+              style={{
+                fontSize: '20px',
+                fontWeight: '600',
+                color: '#EF233C',
+                textAlign: 'center'
+              }}
+            >
+              {this.props.user.data.message}
+            </p>
+          ) : null}
+
           <FieldStyled
             type="email"
             name="email"
@@ -95,7 +108,9 @@ class FormLogin extends React.Component {
               })
             }}
             placeholder="email"
+            required
           />
+
           <FieldStyled
             type="password"
             name="password"
@@ -106,6 +121,7 @@ class FormLogin extends React.Component {
               })
             }}
             placeholder="password"
+            required
           />
           <ButtonStyled>Login</ButtonStyled>
           <p style={{ textAlign: 'center' }}>Does not have an account yet? </p>
@@ -118,9 +134,13 @@ class FormLogin extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user
-})
+const mapStateToProps = state => {
+  // console.log(state.user)
+
+  return {
+    user: state.user
+  }
+}
 const mapDispatchToProps = {
   userLogin
 }

@@ -2,6 +2,8 @@ import axios from 'axios'
 import decode from 'jwt-decode'
 export const LOGIN = '@user/LOGIN'
 export const LOGIN_SUCCESS = '@user/LOGIN_SUCCESS'
+export const LOGIN_FAIL = '@user/LOGIN_FAIL'
+export const LOGOUT_SUCCESS = '@user/LOGOUT_SUCCESS'
 
 export const userLogin = data => dispatch =>
   new Promise(async (resolve, reject) => {
@@ -23,4 +25,20 @@ export const userLogin = data => dispatch =>
         }
       })
     }
+    // console.log(response)
+    dispatch({
+      type: LOGIN_FAIL,
+      payload: response.data
+    })
   })
+export const LogoutUser = () => {
+  return async dispatch => {
+    const response = await axios.get(`http://localhost:1234/logout`)
+    // console.log(response)
+    dispatch({
+      type: LOGOUT_SUCCESS,
+      payload: response.data
+    })
+    localStorage.removeItem('AUTH_TOKEN')
+  }
+}

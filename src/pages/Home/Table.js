@@ -5,11 +5,11 @@ import { Edit_Task } from '../../modules/task/actions'
 import TASKEDIT from './EditTask'
 
 const Content = Styled.div`
-    width:70%;
+    width:60%;
     min-height:100vh;
     height:100%;
     margin-top:50px;
-    margin-left:15%;
+    margin-left:20%;
     overflow-x: scroll;
 `
 // display: flex;
