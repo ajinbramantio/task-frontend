@@ -82,15 +82,22 @@ class AddTask extends React.Component {
 
     // const chooseDate = `${new Date.getDate()}/${new Date.getMonth()}, ${new Date.getFullYear()}`
     this.state = {
-      startDate: new Date()
+      name: '',
+      NameItems: '',
+      totalItem: 0,
+      price: 0,
+      totalPrice: 0,
+      date: new Date()
     }
     this.handleChange = this.handleChange.bind(this)
   }
 
   Popup() {
-    // console.log(this.props.showPopup)
+    console.log(this.state)
     if (this.props.showPopup === true) {
+      const newData = this.state
       const dataAddTask = {
+        ...newData,
         showPopup: !this.props.showPopup
       }
       this.props.dispatch(Add_Task(dataAddTask))
@@ -101,7 +108,7 @@ class AddTask extends React.Component {
     // console.log(date)
 
     this.setState({
-      startDate: date
+      date: date
     })
   }
 
@@ -129,33 +136,57 @@ class AddTask extends React.Component {
             </div>
 
             <div style={{ padding: '24px', backgroundColor: 'white' }}>
-              <form style={{ width: '95%' }}>
+              <form
+                onSubmit={event => {
+                  event.preventDefault()
+                  this.Popup()
+                }}
+                style={{ width: '95%' }}
+              >
                 <FieldWrapper>
                   <label htmlFor="">Name :</label>
                   <InputText
                     type="text"
-                    name=""
+                    name="name"
+                    value={this.state.name}
+                    onChange={event => {
+                      this.setState({
+                        name: event.target.value
+                      })
+                    }}
                     placeholder="input Name"
-                    required
+                    //required
                   />
                 </FieldWrapper>
 
                 <FieldWrapper>
-                  <label htmlFor="">Items :</label>
+                  <label htmlFor="">Name Items :</label>
                   <InputText
                     type="text"
                     name=""
                     placeholder="input Items"
-                    required
+                    value={this.state.NameItems}
+                    onChange={event => {
+                      this.setState({
+                        NameItems: event.target.value
+                      })
+                    }}
+                    //required
                   />
                 </FieldWrapper>
                 <FieldWrapper>
                   <label htmlFor="">Total Items :</label>
                   <InputText
-                    type="text"
+                    type="number"
                     name=""
-                    placeholder="input Items"
-                    required
+                    placeholder="input Name Items"
+                    value={this.state.totalItem}
+                    onChange={event => {
+                      this.setState({
+                        totalItem: Number(event.target.value)
+                      })
+                    }}
+                    //required
                   />
                 </FieldWrapper>
                 <FieldWrapper>
@@ -164,7 +195,14 @@ class AddTask extends React.Component {
                     type="text"
                     name=""
                     placeholder="input Price"
-                    required
+                    value={this.state.price}
+                    onChange={event => {
+                      this.setState({
+                        price: Number(event.target.value),
+                        totalPrice: event.target.value * this.state.totalItem
+                      })
+                    }}
+                    //required
                   />
                 </FieldWrapper>
                 <FieldWrapper>
@@ -173,7 +211,16 @@ class AddTask extends React.Component {
                     type="text"
                     name=""
                     placeholder="input Price"
-                    required
+                    value={this.state.totalPrice}
+                    onChange={event => {
+                      const total = this.state.price * this.state.totalItem
+                      console.log(total)
+
+                      this.setState({
+                        totalPrice: total
+                      })
+                    }}
+                    //required
                   />
                 </FieldWrapper>
                 <FieldWrapper>
@@ -182,7 +229,7 @@ class AddTask extends React.Component {
                   <InputDate
                     type="date"
                     dateFormat="dd/MM/yyyy"
-                    selected={this.state.startDate}
+                    selected={this.state.date}
                     onChange={this.handleChange}
                     peekNextMonth
                     showMonthDropdown
@@ -215,7 +262,8 @@ const mapStateToProps = state => {
 
   return {
     data: state.task.data,
-    showPopup: state.task.showPopupAdd
+    showPopup: state.task.showPopupAdd,
+    message: state.task.message
   }
 }
 
