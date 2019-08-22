@@ -85,8 +85,6 @@ class Home extends React.Component {
     }
   }
   togglePopup() {
-    console.log('aaa')
-
     this.setState({
       showPopup: !this.state.showPopup,
       close: 'close me'
@@ -143,7 +141,7 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
+  // console.log(state)
 
   return {
     login: state.user

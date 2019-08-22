@@ -1,15 +1,20 @@
-import { LOGIN, LOGIN_SUCCESS, LOGOUT_SUCCESS, LOGIN_FAIL } from './actions'
+import {
+  LOGIN,
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+  LOGIN_FAIL,
+  GET_PROFILE_SUCCESS
+} from './actions'
 const initialState = {
   latesResponse: null,
   isLoading: false,
   isAuthorized: false,
-  token: '',
-  isRole: Number,
-  Id: '',
+  message: '',
   data: []
 }
 
 export default (state = initialState, action) => {
+  // console.log(action.payload)
   switch (action.type) {
     case LOGIN:
       return {
@@ -17,31 +22,35 @@ export default (state = initialState, action) => {
         isLoading: true
       }
     case LOGIN_SUCCESS:
-      // console.log(action)
       return {
+        ...state,
         isLoading: false,
         isAuthorized: true,
-        token: action.payload.token,
-        isRole: action.payload.role,
-        Id: action.payload.id
+        data: action.payload
       }
     case LOGIN_FAIL:
       // console.log(action.payload)
-
       return {
         ...state,
         data: action.payload
       }
+    case GET_PROFILE_SUCCESS:
+      // console.log(action.payload)
+
+      return {
+        ...state,
+        isLoading: false,
+        isAuthorized: true,
+        data: action.payload.data,
+        message: action.payload.message
+      }
     case LOGOUT_SUCCESS:
-      console.log(action.payload)
+      // console.log(action.payload)
 
       return {
         ...state,
         isLoading: false,
         isAuthorized: false,
-        token: '',
-        isRole: null,
-        Id: '',
         data: action.payload
       }
 

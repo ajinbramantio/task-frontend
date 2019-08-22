@@ -12,7 +12,7 @@ export const RegisterPageWrapper = styled.div`
   height: 100%;
   align-items: center;
   flex-direction: column;
-  background-color: '#FAF9FF';
+  background-color: #faf9ff;
 `
 const FormStyled = styled.form`
   width: 30%;
@@ -80,11 +80,36 @@ class Register extends React.Component {
     this.props.RegisterUser(this.state)
   }
   render() {
+    // console.log(this.props.message !== '' && this.props.data.length === 0)
+
     return (
       <RegisterPageWrapper>
-        {localStorage.AUTH_TOKEN ? <Redirect to="/" /> : null}
-        {this.props.data.hasError ? <h1>{this.props.data.message}</h1> : ''}
         <h1>Task Register</h1>
+        {localStorage.AUTH_TOKEN ? <Redirect to="/" /> : null}
+        {this.props.message !== '' && this.props.data.length === 0 ? (
+          <p
+            style={{
+              fontSize: '20px',
+              fontWeight: '600',
+              color: '#EF233C',
+              textAlign: 'center'
+            }}
+          >
+            {this.props.message}
+          </p>
+        ) : this.props.data.length !== 0 ? (
+          <p
+            style={{
+              fontSize: '20px',
+              fontWeight: '600',
+              color: '#20BF55',
+              textAlign: 'center'
+            }}
+          >
+            {this.props.message}
+          </p>
+        ) : null}
+
         <FormStyled
           onSubmit={event => {
             this.Submit(event)
@@ -97,7 +122,7 @@ class Register extends React.Component {
             value={this.state.userName}
             onChange={event => {
               const { value, maxLength } = event.target
-              console.log(value.length)
+              // console.log(value.length)
 
               if (value.length >= 32) {
                 this.setState({
@@ -111,11 +136,12 @@ class Register extends React.Component {
               })
             }}
             placeholder="please input youre user name"
+            required
           />
 
           {!this.state.message ? '' : <p>{this.state.message}</p>}
           <FieldStyled
-            type="text"
+            type="email"
             name="email"
             value={this.state.email}
             onChange={event => {
@@ -124,6 +150,7 @@ class Register extends React.Component {
               })
             }}
             placeholder="please input youre email"
+            required
           />
           <FieldStyled
             type="password"
@@ -135,6 +162,7 @@ class Register extends React.Component {
               })
             }}
             placeholder="please input youre password"
+            required
           />
 
           <ButtonRegister> Register</ButtonRegister>
@@ -153,7 +181,7 @@ class Register extends React.Component {
 
 const mapStateToProps = state => ({
   message: state.register.message,
-  data: state.register
+  data: state.register.data
 })
 
 const mapDispatchToProps = {

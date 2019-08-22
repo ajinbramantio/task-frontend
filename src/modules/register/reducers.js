@@ -1,9 +1,6 @@
 import { REGISTER_FAIL, REGISTER_SUCCESS } from './actions'
 const initialState = {
-  userName: '',
-  email: '',
-  password: '',
-  role: '',
+  data: [],
   isLoading: false,
   message: '',
   hasError: false
@@ -12,19 +9,18 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case REGISTER_SUCCESS:
-      console.log(action)
+      // console.log(action.payload)
 
       return {
-        userName: action.payload.userName,
-        email: action.payload.email,
-        role: action.payload.role,
+        ...state,
         isLoading: true,
-        message: '',
+        message: action.payload.message,
+        data: action.payload.data,
         hasError: false
       }
 
     case REGISTER_FAIL:
-      //   console.log(action.message)
+      // console.log(action.message)
 
       return {
         ...state,

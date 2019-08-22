@@ -5,25 +5,23 @@ export const REGISTER_FAIL = '@register/REGISTER_FAIL'
 
 export const RegisterUser = data => {
   return async dispatch => {
-    try {
-      const response = await axios.post(`http://localhost:1234/register`, data)
-      const result = response.data.dataUser
-
+    const response = await axios.post(`http://localhost:1234/register`, data)
+    const result = response.data.dataUser
+    const message = response.data.message
+    // console.log(response.data)
+    if (result) {
       dispatch({
         type: REGISTER_SUCCESS,
         payload: {
-          id: result._id,
-          userName: result.userName,
-          email: result.email,
-          role: result.role
+          data: result,
+          message
         }
       })
-    } catch (e) {
-      //   console.log(e.response.data.message)
-      dispatch({
-        type: REGISTER_FAIL,
-        message: e.response.data.message
-      })
     }
+
+    dispatch({
+      type: REGISTER_FAIL,
+      message
+    })
   }
 }

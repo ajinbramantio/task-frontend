@@ -4,6 +4,7 @@ export const LOGIN = '@user/LOGIN'
 export const LOGIN_SUCCESS = '@user/LOGIN_SUCCESS'
 export const LOGIN_FAIL = '@user/LOGIN_FAIL'
 export const LOGOUT_SUCCESS = '@user/LOGOUT_SUCCESS'
+export const GET_PROFILE_SUCCESS = '@user/GET_PROFILE_SUCCESS'
 
 export const userLogin = data => dispatch =>
   new Promise(async (resolve, reject) => {
@@ -41,4 +42,37 @@ export const LogoutUser = () => {
     })
     localStorage.removeItem('AUTH_TOKEN')
   }
+}
+
+export const GetUser = () => dispatch => {
+  new Promise(async (resolve, reject) => {
+    // return async dispatch => {
+
+    try {
+      const token = localStorage.getItem('AUTH_TOKEN')
+      // console.log(token)
+      const decoded = decode(token)
+      const response = await axios.get(
+        `http://localhost:1234/user/${decoded._id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        }
+      )
+
+      dispatch({
+        type: GET_PROFILE_SUCCESS,
+        payload: {
+          data: response.data.data,
+          message: response.data.message
+        }
+      })
+      resolve()
+    } catch (error) {
+      // console.log(error.message)
+
+      reject(error.message)
+    }
+  })
 }

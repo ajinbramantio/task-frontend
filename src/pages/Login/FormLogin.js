@@ -73,7 +73,7 @@ class FormLogin extends React.Component {
   }
 
   render() {
-    console.log(this.props.user.data)
+    // console.log(this.props.user.data)
 
     return this.props.user.isAuthorized ? (
       <Redirect to="/" />

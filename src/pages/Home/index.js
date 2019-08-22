@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 import Styled from '@emotion/styled'
 import AddTask from './AddTask'
 import { Add_Task } from '../../modules/task/actions'
-import { LogoutUser } from '../../modules/user/actions'
+import { LogoutUser, GetUser } from '../../modules/user/actions'
 
 import Table from './Table'
 
@@ -13,7 +13,7 @@ const HomePage = Styled.div`
   min-height: 100vh;
   height: 100%;
   flex-direction: column;
-  background-color: '#FAF9FF';
+  background-color: #FAF9FF;
 `
 
 const HeaderHome = Styled.div`
@@ -74,6 +74,9 @@ class Home extends React.Component {
       this.props.dispatch(Add_Task(dataAddTask))
     }
   }
+  componentDidMount() {
+    this.props.dispatch(GetUser())
+  }
 
   render() {
     // console.log(!this.props.user.token, !localStorage.AUTH_TOKEN)
@@ -90,7 +93,7 @@ class Home extends React.Component {
           </HeaderLeft>
           <HeaderRight>
             <RightDiv>
-              <UserName>username</UserName>
+              <UserName>{this.props.user.userName}</UserName>
               <LogoutButton
                 onClick={async () => {
                   // console.log(this.props.history.push('/login'))
@@ -113,10 +116,10 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.user)
+  // console.log(state)
 
   return {
-    user: state.user,
+    user: state.user.data,
     showPopup: state.task.showPopupAdd
   }
 }
