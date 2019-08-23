@@ -4,6 +4,8 @@ import {
   CANCEL_ADDTASK,
   TASKEDIT_STARTED,
   TASKGET_SUCCESS,
+  TASKUPDATE_SUCCESS,
+  CANCEL_TASKEDIT,
   TASKDELETE_SUCCESS
 } from './actions'
 const initialState = {
@@ -11,6 +13,7 @@ const initialState = {
   showPopupEdit: false,
   message: '',
   data: [],
+  editData: [],
   isLoading: false,
   Error: false
 }
@@ -35,6 +38,12 @@ export default (state = initialState, action) => {
         message: action.message,
         data: [action.data]
       }
+    case CANCEL_ADDTASK:
+      return {
+        ...state,
+        showPopupAdd: false,
+        isLoading: true
+      }
     case TASKGET_SUCCESS:
       return {
         ...state,
@@ -45,20 +54,31 @@ export default (state = initialState, action) => {
         data: action.data
       }
     case TASKEDIT_STARTED:
+      // console.log(action)
+
       return {
         ...state,
-        showPopupEdit: action.showPopup
+        isLoading: false,
+        Error: false,
+        editData: action.data,
+        message: action.message,
+        showPopupEdit: true
       }
 
-    case CANCEL_ADDTASK:
+    case CANCEL_TASKEDIT:
       return {
         ...state,
-        showPopupAdd: false,
+        showPopupEdit: false,
+        isLoading: true
+      }
+    case TASKUPDATE_SUCCESS:
+      console.log(action)
+      return {
+        ...state,
+        showPopupEdit: false,
         isLoading: true
       }
     case TASKDELETE_SUCCESS:
-      console.log(action)
-
       return {
         ...state,
         isLoading: false,

@@ -64,9 +64,13 @@ const ButtonDelete = Styled.button`
     cursor:pointer;
 `
 class Table extends React.Component {
-  tooglePopupEdit(id) {
+  tooglePopupEdit(taskId, creatorId) {
+    // console.log(taskId, creatorId)
+
     if (this.props.showPopup === false) {
       const dataTaskEdit = {
+        taskId,
+        creatorId,
         showPopup: !this.props.showPopup
       }
       this.props.dispatch(Edit_Task(dataTaskEdit))
@@ -150,7 +154,7 @@ class Table extends React.Component {
 }
 
 const maStateToProps = state => {
-  console.log(state.task.data)
+  // console.log(state.task.data)
 
   return {
     showPopup: state.task.showPopupEdit,

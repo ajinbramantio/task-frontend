@@ -1,7 +1,8 @@
 import React from 'react'
+import DatePicker from 'react-datepicker'
 import { connect } from 'react-redux'
 import Styled from '@emotion/styled'
-import { Edit_Task } from '../../modules/task/actions'
+import { Update_Task, Get_Task } from '../../modules/task/actions'
 
 const PopupStyled = Styled.div`
   position: fixed;
@@ -44,6 +45,14 @@ const InputText = Styled.input`
   border-radius: 8px;
   border: 1px solid #ccc;
 `
+const InputDate = Styled(DatePicker)`
+ 
+  display: block;
+  padding: 10px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+`
 const UpdateButton = Styled.button`
   margin:20px 20px 20px 0px;
   padding:10px 20px;
@@ -67,20 +76,44 @@ const CancelButton = Styled.button`
   outline:none;
 `
 class EditTask extends React.Component {
-  Popup() {
-    // console.log(this.props.showPopup)
-    if (this.props.showPopup === true) {
+  constructor(props) {
+    super()
+    // console.log(props.data.name)
+
+    this.state = {
+      name: props.data.name,
+      nameItems: props.data.nameItems,
+      totalItem: props.data.totalItem,
+      price: props.data.price,
+      totalPrice: props.data.totalPrice,
+      date: new Date(props.data.date)
+    }
+  }
+  Popup(data, showPop) {
+    console.log(showPop)
+    if (showPop !== undefined) {
       const dataEditTask = {
-        showPopup: !this.props.showPopup
+        ...data,
+        taskId: this.props.data._id,
+        creatorId: this.props.data.creator._id,
+        showPopup: this.props.showPopup
       }
       // console.log(dataEditTask)
 
-      this.props.dispatch(Edit_Task(dataEditTask))
+      this.props.dispatch(Update_Task(dataEditTask)).then(() => {
+        this.props.dispatch(Get_Task())
+      })
+    } else {
+      const dataEditTask = {
+        showPopup: !this.props.showPopup
+      }
+      this.props.dispatch(Update_Task(dataEditTask))
+      // console.log('salah')
     }
   }
 
   render() {
-    // console.log(this.props)
+    // console.log(this.props.data)
 
     return (
       <React.Fragment>
@@ -88,7 +121,7 @@ class EditTask extends React.Component {
           <PopupInner>
             <ButtonX
               onClick={() => {
-                this.Popup()
+                this.Popup(this.state)
               }}
             >
               X
@@ -103,37 +136,89 @@ class EditTask extends React.Component {
             </div>
 
             <div style={{ padding: '24px', backgroundColor: 'white' }}>
-              <form style={{ width: '95%' }}>
+              <form
+                onSubmit={e => {
+                  e.preventDefault()
+                  this.Popup(this.state, this.props.showPopup)
+                }}
+                style={{ width: '95%' }}
+              >
                 <FieldWrapper>
                   <label htmlFor="">Name :</label>
-                  <InputText type="text" name="" placeholder="input Name" />
+                  <InputText
+                    type="text"
+                    name=""
+                    value={this.state.name}
+                    onChange={e => {
+                      this.setState({
+                        name: e.target.value
+                      })
+                    }}
+                  />
                 </FieldWrapper>
 
                 <FieldWrapper>
                   <label htmlFor="">Items :</label>
-                  <InputText type="text" name="" placeholder="input Items" />
+                  <InputText
+                    type="text"
+                    name=""
+                    value={this.state.totalItem}
+                    onChange={e => {
+                      this.setState({
+                        totalItem: e.target.value
+                      })
+                    }}
+                  />
                 </FieldWrapper>
-                <FieldWrapper>
-                  <label htmlFor="">Total Items :</label>
-                  <InputText type="text" name="" placeholder="input Items" />
-                </FieldWrapper>
+
                 <FieldWrapper>
                   <label htmlFor="">Price :</label>
-                  <InputText type="text" name="" placeholder="input Price" />
+                  <InputText
+                    type="text"
+                    name=""
+                    value={this.state.price}
+                    onChange={e => {
+                      this.setState({
+                        price: e.target.value
+                      })
+                    }}
+                  />
                 </FieldWrapper>
                 <FieldWrapper>
                   <label htmlFor="">Total Price :</label>
-                  <InputText type="text" name="" placeholder="input Price" />
+                  <InputText
+                    type="text"
+                    name=""
+                    value={this.state.totalPrice}
+                    onChange={e => {
+                      this.setState({
+                        totalPrice: e.target.value
+                      })
+                    }}
+                  />
                 </FieldWrapper>
                 <FieldWrapper>
                   <label htmlFor="">Date :</label>
-                  <InputText type="datetime" name="" placeholder="date" />
+                  <InputDate
+                    type="date"
+                    dateFormat="dd/MM/yyyy"
+                    selected={this.state.date}
+                    onChange={e => {
+                      this.setState({
+                        date: e.target.value
+                      })
+                    }}
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                  />
                 </FieldWrapper>
 
                 <UpdateButton>Update</UpdateButton>
                 <CancelButton
                   onClick={() => {
-                    this.Popup()
+                    this.Popup(this.state)
                   }}
                   text="Close Me"
 
@@ -150,10 +235,10 @@ class EditTask extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  // console.log(state)
+  // console.log(state.task.editData)
 
   return {
-    data: state.task.data,
+    data: state.task.editData,
     showPopup: state.task.showPopupEdit
   }
 }
