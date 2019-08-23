@@ -1,12 +1,14 @@
 import axios from 'axios'
 import decode from 'jwt-decode'
 export const ADDTASK_STARTED = '@task/ADDTASK_STARTED'
-export const TASKGET_SUCCESS = '@task/TASKGET_SUCCESS'
+export const ADDTASK_SUCCESS = '@task/ADDTASK_SUCCESS'
 export const CANCEL_ADDTASK = '@task/CANCEL_TASK'
+
+export const TASKGET_SUCCESS = '@task/TASKGET_SUCCESS'
 export const TASKEDIT_STARTED = '@task/TASKEDIT_STARTED'
 export const CANCEL_TASKEDIT = '@task/CANCEL_TASKEDIT'
 
-// export const TASKEDIT_STARTED = '@task/TASKEDIT_STARTED'
+export const TASKDELETE_SUCCESS = '@task/TASKDELETE_SUCCESS'
 
 export const Add_Task = data => {
   return async dispatch => {
@@ -28,17 +30,22 @@ export const Add_Task = data => {
         date: data.date,
         creator: decoded._id
       }
-      // console.log(newData)
+      console.log(newData)
       const response = await axios.post(
-        `http://localhost:1234/create-task/5d5aba6ea8b3e636dba4a250`,
+        `http://localhost:1234/create-task/${decoded._id}`,
         newData,
         {
           headers: {
-            authorization: `Bearer ${localStorage.getItem('AUTH_TOKEN')}`
+            authorization: `Bearer ${token}`
           }
         }
       )
-      console.log(response)
+      // console.log(response.data)
+      dispatch({
+        type: ADDTASK_SUCCESS,
+        data: response.data.data,
+        message: response.data.message
+      })
     } else {
       dispatch({
         type: CANCEL_ADDTASK,
@@ -71,18 +78,43 @@ export const Edit_Task = data => {
 
 export const Get_Task = () => {
   return async dispatch => {
+    // console.log('ada')
+    const token = localStorage.getItem('AUTH_TOKEN')
+    const decoded = decode(token)
+
     const response = await axios.get(
-      `http://localhost:1234/get-task/5d5aba6ea8b3e636dba4a250`,
+      `http://localhost:1234/get-task/${decoded._id}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem('AUTH_TOKEN')}`
         }
       }
     )
-    // console.log(response)
+    console.log(response)
 
     dispatch({
       type: TASKGET_SUCCESS,
+      data: response.data.data,
+      message: response.data.message
+    })
+  }
+}
+
+export const Delete_Task = (taskId, creatorId) => {
+  return async dispatch => {
+    console.log(taskId, creatorId)
+    const response = await axios.delete(
+      `http://localhost:1234/remove-task/${taskId}/${creatorId}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('AUTH_TOKEN')}`
+        }
+      }
+    )
+    console.log(response)
+
+    dispatch({
+      type: TASKDELETE_SUCCESS,
       data: response.data.data,
       message: response.data.message
     })

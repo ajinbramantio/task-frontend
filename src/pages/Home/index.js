@@ -19,8 +19,8 @@ const HomePage = Styled.div`
 const HeaderHome = Styled.div`
   display:flex;
   margin-top:100px;
-  margin-left: 20%;
-  width:60%;
+  margin-left: 25%;
+  width:50%;
 `
 const HeaderLeft = Styled.div`
   

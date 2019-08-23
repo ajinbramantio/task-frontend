@@ -1,15 +1,15 @@
 import React from 'react'
 import Styled from '@emotion/styled'
 import { connect } from 'react-redux'
-import { Edit_Task, Get_Task } from '../../modules/task/actions'
+import { Edit_Task, Get_Task, Delete_Task } from '../../modules/task/actions'
 import TASKEDIT from './EditTask'
 
 const Content = Styled.div`
-    width:60%;
+    width:50%;
     min-height:100vh;
     height:100%;
     margin-top:50px;
-    margin-left:20%;
+    margin-left:25%;
     overflow-x: scroll;
 `
 // display: flex;
@@ -25,6 +25,7 @@ const Tables = Styled.table`
    align-items:center;
    border-collapse: collapse;
    width:max-content;
+  
    
    
    /* flex-direction:column; */
@@ -38,7 +39,7 @@ const Th = Styled.th`
     background-color: #6c7ae0;
     color: #EDF2F4;
 `
-const Td = Styled.th`
+const Td = Styled.td`
     padding:20px;
     text-align:center;
     color:#8D99AE;
@@ -64,19 +65,23 @@ const ButtonDelete = Styled.button`
 `
 class Table extends React.Component {
   tooglePopupEdit(id) {
-    // console.log(id)
     if (this.props.showPopup === false) {
       const dataTaskEdit = {
         showPopup: !this.props.showPopup
       }
       this.props.dispatch(Edit_Task(dataTaskEdit))
     }
+    // this.props.dispatch(Get_Task())
   }
   componentDidMount() {
     this.props.dispatch(Get_Task())
   }
+  delete(taskId, creatorId) {
+    this.props.dispatch(Delete_Task(taskId, creatorId))
+    // this.props.dispatch(Get_Task())
+  }
   render() {
-    // console.log(this.props.data)
+    // console.log(this.props.dataCustomers)
 
     return (
       <Content>
@@ -97,10 +102,11 @@ class Table extends React.Component {
           </thead>
           <tbody>
             {this.props.dataCustomers.map((customer, index) => {
+              // console.log(customer.creator._id)
+
               let Y = new Date(customer.date).getFullYear()
               let M = new Date(customer.date).getMonth()
               let D = new Date(customer.date).getDate()
-              console.log(D + '-' + M)
 
               return (
                 <Tr key={index}>
@@ -114,14 +120,22 @@ class Table extends React.Component {
                   <Td>
                     <ButtonEdit
                       onClick={() => {
-                        this.tooglePopupEdit(customer._id)
+                        this.tooglePopupEdit(customer._id, customer.creator._id)
                       }}
                     >
                       Edit
                     </ButtonEdit>
                   </Td>
                   <Td>
-                    <ButtonDelete>Delete</ButtonDelete>
+                    <ButtonDelete
+                      onClick={() => {
+                        // console.log(customer)
+
+                        this.delete(customer._id, customer.creator._id)
+                      }}
+                    >
+                      Delete
+                    </ButtonDelete>
                   </Td>
                 </Tr>
               )
@@ -136,7 +150,7 @@ class Table extends React.Component {
 }
 
 const maStateToProps = state => {
-  // console.log(state.task)
+  console.log(state.task.data)
 
   return {
     showPopup: state.task.showPopupEdit,

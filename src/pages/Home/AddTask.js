@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Styled from '@emotion/styled'
-import { Add_Task } from '../../modules/task/actions'
+import { Add_Task, Get_Task } from '../../modules/task/actions'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -100,7 +100,9 @@ class AddTask extends React.Component {
         ...newData,
         showPopup: !this.props.showPopup
       }
-      this.props.dispatch(Add_Task(dataAddTask))
+      this.props.dispatch(Add_Task(dataAddTask)).then(() => {
+        this.props.dispatch(Get_Task())
+      })
     }
   }
   handleChange(date) {
