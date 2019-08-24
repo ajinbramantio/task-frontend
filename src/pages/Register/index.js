@@ -17,6 +17,9 @@ export const RegisterPageWrapper = styled.div`
 const FormStyled = styled.form`
   width: 30%;
   margin: 20px;
+  @media (max-width: 699px) {
+    width: 80%;
+  }
 `
 const FieldStyled = styled.input`
   padding: 20px;
@@ -32,6 +35,13 @@ const FieldStyled = styled.input`
     font-style: italic;
     font-size: 15px;
     color: #2f2f2f;
+  }
+  @media (max-width: 699px) {
+    &::placeholder {
+      font-style: italic;
+      font-size: 0.5rem;
+      color: #2f2f2f;
+    }
   }
 `
 

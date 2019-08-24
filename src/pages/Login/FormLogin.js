@@ -7,11 +7,17 @@ import { userLogin } from '../../modules/user/actions'
 
 const FormLoginStyled = styled.div`
   width: 35%;
+  @media (max-width: 699px) {
+    width: 85%;
+  }
 `
 
 const FormStyled = styled.form`
   width: 100%;
   margin: 20px;
+  @media (max-width: 699px) {
+    margin: 0px;
+  }
 `
 const FieldStyled = styled.input`
   padding: 20px;
@@ -28,6 +34,14 @@ const FieldStyled = styled.input`
     color: #2f2f2f;
     font-weight: 600;
   }
+  @media (max-width: 699px) {
+    &::placeholder {
+      font-style: italic;
+      font-size: 10px;
+      color: #2f2f2f;
+      font-weight: 600;
+    }
+  }
 `
 const ButtonStyled = styled.button`
   padding: 20px;
@@ -42,6 +56,11 @@ const ButtonStyled = styled.button`
   font-weight: 800;
   color: #faf9ff;
   cursor: pointer;
+  @media (max-width: 699px) {
+    font-size: 15px;
+    color: #faf9ff;
+    font-weight: 800;
+  }
 `
 const ButtonRegister = styled.button`
   background-color: #d81e5b;
@@ -53,6 +72,11 @@ const ButtonRegister = styled.button`
   font-weight: 800;
   color: #faf9ff;
   cursor: pointer;
+  @media (max-width: 699px) {
+    font-size: 15px;
+    color: #faf9ff;
+    font-weight: 800;
+  }
 `
 class FormLogin extends React.Component {
   constructor() {
