@@ -1,5 +1,6 @@
 import axios from 'axios'
 import decode from 'jwt-decode'
+import { APP_HOST } from '../../constant'
 export const ADDTASK_STARTED = '@task/ADDTASK_STARTED'
 export const ADDTASK_SUCCESS = '@task/ADDTASK_SUCCESS'
 export const CANCEL_ADDTASK = '@task/CANCEL_TASK'
@@ -31,9 +32,9 @@ export const Add_Task = data => {
         date: data.date,
         creator: decoded._id
       }
-      console.log(newData)
+      // console.log(newData)
       const response = await axios.post(
-        `http://localhost:1234/create-task/${decoded._id}`,
+        `${APP_HOST}/create-task/${decoded._id}`,
         newData,
         {
           headers: {
@@ -68,7 +69,7 @@ export const Edit_Task = data => {
 
     if (showPopup === true) {
       const response = await axios.get(
-        `http://localhost:1234/edit-task/${taskId}/${creatorId}`,
+        `${APP_HOST}/edit-task/${taskId}/${creatorId}`,
         {
           headers: {
             authorization: `Bearer ${localStorage.getItem('AUTH_TOKEN')}`
@@ -103,7 +104,7 @@ export const Update_Task = data => {
     // console.log(showPopup)
     if (showPopup === true) {
       const response = await axios.put(
-        `http://localhost:1234/update-task/${taskId}/${creatorId}`,
+        `${APP_HOST}/update-task/${taskId}/${creatorId}`,
         updateData,
         {
           headers: {
@@ -134,14 +135,11 @@ export const Get_Task = () => {
     const token = localStorage.getItem('AUTH_TOKEN')
     const decoded = decode(token)
 
-    const response = await axios.get(
-      `http://localhost:1234/get-task/${decoded._id}`,
-      {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem('AUTH_TOKEN')}`
-        }
+    const response = await axios.get(`${APP_HOST}/get-task/${decoded._id}`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('AUTH_TOKEN')}`
       }
-    )
+    })
     // console.log(response)
 
     dispatch({
@@ -154,16 +152,16 @@ export const Get_Task = () => {
 
 export const Delete_Task = (taskId, creatorId) => {
   return async dispatch => {
-    console.log(taskId, creatorId)
+    // console.log(taskId, creatorId)
     const response = await axios.delete(
-      `http://localhost:1234/remove-task/${taskId}/${creatorId}`,
+      `${APP_HOST}/remove-task/${taskId}/${creatorId}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem('AUTH_TOKEN')}`
         }
       }
     )
-    console.log(response)
+    // console.log(response)
 
     dispatch({
       type: TASKDELETE_SUCCESS,

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import decode from 'jwt-decode'
+import { APP_HOST } from '../../constant'
 export const LOGIN = '@user/LOGIN'
 export const LOGIN_SUCCESS = '@user/LOGIN_SUCCESS'
 export const LOGIN_FAIL = '@user/LOGIN_FAIL'
@@ -12,7 +13,7 @@ export const userLogin = data => dispatch =>
       type: LOGIN
     })
 
-    const response = await axios.post(`http://localhost:1234/login`, data)
+    const response = await axios.post(`${APP_HOST}/login`, data)
     const result = response.data
     if (result && result.token) {
       localStorage.setItem('AUTH_TOKEN', result.token)
@@ -34,7 +35,7 @@ export const userLogin = data => dispatch =>
   })
 export const LogoutUser = () => {
   return async dispatch => {
-    const response = await axios.get(`http://localhost:1234/logout`)
+    const response = await axios.get(`${APP_HOST}/logout`)
     // console.log(response)
     dispatch({
       type: LOGOUT_SUCCESS,
@@ -52,14 +53,11 @@ export const GetUser = () => dispatch => {
       const token = localStorage.getItem('AUTH_TOKEN')
       // console.log(token)
       const decoded = decode(token)
-      const response = await axios.get(
-        `http://localhost:1234/user/${decoded._id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`
-          }
+      const response = await axios.get(`${APP_HOST}/user/${decoded._id}`, {
+        headers: {
+          authorization: `Bearer ${token}`
         }
-      )
+      })
 
       dispatch({
         type: GET_PROFILE_SUCCESS,
