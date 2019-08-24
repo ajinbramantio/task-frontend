@@ -131,22 +131,25 @@ export const Update_Task = data => {
 
 export const Get_Task = () => {
   return async dispatch => {
-    // console.log('ada')
     const token = localStorage.getItem('AUTH_TOKEN')
-    const decoded = decode(token)
+    try {
+      const decoded = decode(token)
 
-    const response = await axios.get(`${APP_HOST}/get-task/${decoded._id}`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem('AUTH_TOKEN')}`
-      }
-    })
-    // console.log(response)
+      const response = await axios.get(`${APP_HOST}/get-task/${decoded._id}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('AUTH_TOKEN')}`
+        }
+      })
+      // console.log(response)
 
-    dispatch({
-      type: TASKGET_SUCCESS,
-      data: response.data.data,
-      message: response.data.message
-    })
+      dispatch({
+        type: TASKGET_SUCCESS,
+        data: response.data.data,
+        message: response.data.message
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 }
 

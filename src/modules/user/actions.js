@@ -68,9 +68,8 @@ export const GetUser = () => dispatch => {
       })
       resolve()
     } catch (error) {
-      // console.log(error.message)
-
-      reject(error.message)
+      console.log(error.message)
+      // reject(error.message)
     }
   })
 }
