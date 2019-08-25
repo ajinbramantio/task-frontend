@@ -26,6 +26,11 @@ const PopupInner = Styled.div`
   margin: auto;
   background: white;
 
+  @media (max-width: 589px) {
+   width: 80%;
+   left:10%;
+  }
+
 `
 const ButtonX = Styled.button`
   position:absolute;
@@ -33,6 +38,13 @@ const ButtonX = Styled.button`
   right:0;
   font-size: 18px;
   cursor:pointer;
+   @media (max-width: 589px) {
+    font-size: 1rem;
+  }
+`
+const FormAdd = Styled.form`
+    width: 80%;
+    margin-inline-start: 5%;
 `
 const FieldWrapper = Styled.div`
   margin-bottom: 10px;
@@ -63,6 +75,12 @@ const UpdateButton = Styled.button`
   border-radius:7px;
   cursor:pointer;
   outline:none;
+  @media (max-width: 589px) {
+   width: 40%;
+   margin:5px;
+  padding:10px;
+  font-size:13px;
+  }
 `
 const CancelButton = Styled.button`
   margin:20px 20px 20px 0px;
@@ -74,6 +92,12 @@ const CancelButton = Styled.button`
   border-radius:7px;
   cursor:pointer;
   outline:none;
+  @media (max-width: 589px) {
+   width: 40%;
+   margin:5px;
+   padding:10px;
+   font-size:13px;
+  }
 `
 class EditTask extends React.Component {
   constructor(props) {
@@ -136,12 +160,11 @@ class EditTask extends React.Component {
             </div>
 
             <div style={{ padding: '24px', backgroundColor: 'white' }}>
-              <form
+              <FormAdd
                 onSubmit={e => {
                   e.preventDefault()
                   this.Popup(this.state, this.props.showPopup)
                 }}
-                style={{ width: '95%' }}
               >
                 <FieldWrapper>
                   <label htmlFor="">Name :</label>
@@ -226,7 +249,7 @@ class EditTask extends React.Component {
                 >
                   close
                 </CancelButton>
-              </form>
+              </FormAdd>
             </div>
           </PopupInner>
         </PopupStyled>

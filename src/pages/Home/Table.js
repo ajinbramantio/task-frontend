@@ -56,7 +56,7 @@ const Th = Styled.th`
   }
   @media (max-width: 589px) {
     padding:12px;
-   font-size:0.2rem;
+   font-size:0.8rem;
   }
 `
 const Td = Styled.td`
@@ -70,7 +70,7 @@ const Td = Styled.td`
   }
   @media (max-width: 589px) {
     padding:10px;
-   font-size:0.2rem;
+   font-size:0.8rem;
   }
 `
 const ButtonEdit = Styled.button`
@@ -87,7 +87,7 @@ const ButtonEdit = Styled.button`
   }
     @media (max-width: 589px) {
       padding:5px 10px;
-   font-size:0.2rem;
+   font-size:0.8rem;
   }
 `
 const ButtonDelete = Styled.button`
@@ -104,7 +104,7 @@ const ButtonDelete = Styled.button`
   }
    @media (max-width: 589px) {
       padding:5px 10px;
-   font-size:0.2rem;
+   font-size:0.8rem;
   }
 `
 class Table extends React.Component {

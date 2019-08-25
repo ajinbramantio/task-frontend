@@ -26,6 +26,10 @@ const PopupInner = Styled.div`
   bottom: 60%;
   margin: auto;
   background: white;
+   @media (max-width: 589px) {
+   width: 80%;
+   left:10%;
+  }
 
 `
 const ButtonX = Styled.button`
@@ -34,6 +38,13 @@ const ButtonX = Styled.button`
   right:0;
   font-size: 18px;
   cursor:pointer;
+   @media (max-width: 589px) {
+    font-size: 1rem;
+  }
+`
+const FormAdd = Styled.form`
+    width: 80%;
+    margin-inline-start: 8%;
 `
 const FieldWrapper = Styled.div`
   margin-bottom: 10px;
@@ -64,6 +75,12 @@ const CreateButton = Styled.button`
   color:#faf9ff;
   border-radius:7px;
   cursot:pointer;
+  @media (max-width: 589px) {
+    width: 40%;
+    margin:5px;
+    padding:10px;
+    font-size:13px;
+  }
 `
 const CancelButton = Styled.button`
   margin:20px 20px 20px 0px;
@@ -74,6 +91,12 @@ const CancelButton = Styled.button`
   color:#faf9ff;
   border-radius:7px;
   cursor:pointer;
+  @media (max-width: 589px) {
+   width: 40%;
+   margin:5px;
+   padding:10px;
+   font-size:13px;
+  }
   
 `
 class AddTask extends React.Component {
@@ -138,12 +161,11 @@ class AddTask extends React.Component {
             </div>
 
             <div style={{ padding: '24px', backgroundColor: 'white' }}>
-              <form
+              <FormAdd
                 onSubmit={event => {
                   event.preventDefault()
                   this.Popup()
                 }}
-                style={{ width: '95%' }}
               >
                 <FieldWrapper>
                   <label htmlFor="">Name :</label>
@@ -251,7 +273,7 @@ class AddTask extends React.Component {
                 >
                   close
                 </CancelButton>
-              </form>
+              </FormAdd>
             </div>
           </PopupInner>
         </PopupStyled>
