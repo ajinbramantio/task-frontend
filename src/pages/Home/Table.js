@@ -151,7 +151,16 @@ class Table extends React.Component {
           <tbody>
             {this.props.dataCustomers.map((customer, index) => {
               // console.log(customer.creator._id)
-
+              const Price = new Intl.NumberFormat('IND', {
+                maximumSignificantDigits: 3,
+                style: 'currency',
+                currency: 'IDR'
+              }).format(customer.price)
+              const TotalPrice = new Intl.NumberFormat('IND', {
+                maximumSignificantDigits: 3,
+                style: 'currency',
+                currency: 'IDR'
+              }).format(customer.totalPrice)
               let Y = new Date(customer.date).getFullYear()
               let M = new Date(customer.date).getMonth()
               let D = new Date(customer.date).getDate()
@@ -162,8 +171,8 @@ class Table extends React.Component {
                   <Td>{customer.name}</Td>
                   <Td>{customer.nameItems}</Td>
                   <Td>{customer.totalItem}</Td>
-                  <Td>{customer.price}</Td>
-                  <Td>{customer.totalPrice}</Td>
+                  <Td>{Price}</Td>
+                  <Td>{TotalPrice}</Td>
                   <Td>{`${D}-${M + 1}-${Y}`}</Td>
                   <Td>
                     <ButtonEdit

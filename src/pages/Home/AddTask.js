@@ -222,7 +222,7 @@ class AddTask extends React.Component {
                     value={this.state.price}
                     onChange={event => {
                       this.setState({
-                        price: Number(event.target.value),
+                        price: event.target.value,
                         totalPrice: event.target.value * this.state.totalItem
                       })
                     }}

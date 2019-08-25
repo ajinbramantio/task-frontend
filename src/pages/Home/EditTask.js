@@ -226,9 +226,9 @@ class EditTask extends React.Component {
                     type="date"
                     dateFormat="dd/MM/yyyy"
                     selected={this.state.date}
-                    onChange={e => {
+                    onChange={date => {
                       this.setState({
-                        date: e.target.value
+                        date: date
                       })
                     }}
                     peekNextMonth
