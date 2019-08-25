@@ -14,6 +14,15 @@ const HomePage = Styled.div`
   height: 100%;
   flex-direction: column;
   background-color: #FAF9FF;
+  @media (min-width: 1820px) {
+    width: 100%;
+  }
+   @media (max-width: 1050px) {
+    width: 100%;
+  }
+  @media (max-width: 589px) {
+    width: 100%;
+  }
 `
 
 const HeaderHome = Styled.div`
@@ -21,18 +30,51 @@ const HeaderHome = Styled.div`
   margin-top:100px;
   margin-left: 25%;
   width:50%;
+  @media (min-width: 1820px) {
+    width: 100%;
+     margin-left: 0;
+  }
+   @media (max-width: 1050px) {
+    width: 100%;
+    margin-left: 0;
+  }
+  @media (max-width: 589px) {
+    width: 100%;
+    margin-left: 0;
+  }
 `
 const HeaderLeft = Styled.div`
-  
   width:50%;
+  @media (min-width: 1820px) {
+     margin-left: 25%;
+  }
+   @media (max-width: 1050px) {
+    margin-left: 10%;
+  }
+   @media (max-width: 589px) {
+    margin-left: 3%;
+  }
+
 `
 const HeaderRight = Styled.div`
   width:50%;
+   @media (min-width: 1820px) {
+     margin-right: 25%;
+  }
+   @media (max-width: 1050px) {
+    margin-right: 10%;
+  }
+   @media (max-width: 589px) {
+    margin-right: 3%;
+  }
 `
 const RightDiv = Styled.div`
   width:100%;
   display:flex;
   justify-content:flex-end;
+   /* @media (min-width: 1820px) {
+    width: 59%;
+  } */
 `
 const AddTaskButton = Styled.button`
   padding:10px 20px;
@@ -42,6 +84,14 @@ const AddTaskButton = Styled.button`
   color:#faf9ff;
   border-radius:7px;
   cursor:pointer;
+   @media (min-width: 1820px) {
+     padding:15px 30px;
+     font-size: 2rem;
+  }
+   @media (max-width: 589px) {
+    padding: 5px 10px;
+    font-size: 10px;
+  }
 `
 const UserName = Styled.span`
     margin-right:5%;
@@ -52,7 +102,13 @@ const UserName = Styled.span`
     font-weight: 800;
     color:#1D3557;
    
-    
+     @media (min-width: 1820px) {
+     font-size: 2.5rem;
+  }
+  @media (max-width: 589px) {
+ 
+    font-size: 0.8rem;
+  }
 `
 const LogoutButton = Styled.button`
   padding:10px 20px;
@@ -62,6 +118,14 @@ const LogoutButton = Styled.button`
   color:#faf9ff;
   border-radius:7px;
   cursor:pointer;
+   @media (min-width: 1820px) {
+     padding:15px 30px;
+     font-size: 2rem;
+  }
+  @media (max-width: 589px) {
+    padding: 5px 10px;
+    font-size: 10px;
+  }
 `
 
 class Home extends React.Component {

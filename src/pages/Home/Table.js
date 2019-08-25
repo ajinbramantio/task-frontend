@@ -11,6 +11,21 @@ const Content = Styled.div`
     margin-top:50px;
     margin-left:25%;
     overflow-x: scroll;
+  @media (min-width: 1820px) {
+    width:50%;
+    margin-left:25%;
+  }
+   @media (max-width: 1050px) {
+     width:80%;
+    margin-left:10%;
+  }
+
+   @media (max-width: 589px) {
+    width:94%;
+    margin-left:3%;
+    margin-top: 25px;
+  }
+  
 `
 // display: flex;
 // justify - content: center;
@@ -25,9 +40,7 @@ const Tables = Styled.table`
    align-items:center;
    border-collapse: collapse;
    width:max-content;
-  
-   
-   
+      
    /* flex-direction:column; */
 `
 const Tr = Styled.tr`
@@ -38,12 +51,27 @@ const Th = Styled.th`
     text-align:left;
     background-color: #6c7ae0;
     color: #EDF2F4;
+     @media (min-width: 1820px) {
+     font-size:2rem;
+  }
+  @media (max-width: 589px) {
+    padding:12px;
+   font-size:0.2rem;
+  }
 `
 const Td = Styled.td`
     padding:20px;
     text-align:center;
     color:#8D99AE;
     color: #2B2D42;
+     @media (min-width: 1820px) {
+     padding:20px;
+     font-size:2rem;
+  }
+  @media (max-width: 589px) {
+    padding:10px;
+   font-size:0.2rem;
+  }
 `
 const ButtonEdit = Styled.button`
     padding:10px 20px;
@@ -53,6 +81,14 @@ const ButtonEdit = Styled.button`
     font-weight: 600;
     color:#faf9ff;
     cursor:pointer;
+     @media (min-width: 1820px) {
+       padding:15px 30px;
+     font-size:2rem;
+  }
+    @media (max-width: 589px) {
+      padding:5px 10px;
+   font-size:0.2rem;
+  }
 `
 const ButtonDelete = Styled.button`
     padding:10px 20px;
@@ -62,6 +98,14 @@ const ButtonDelete = Styled.button`
     font-weight: 600;
     color:#faf9ff;
     cursor:pointer;
+     @media (min-width: 1820px) {
+        padding:15px 30px;
+     font-size:2rem;
+  }
+   @media (max-width: 589px) {
+      padding:5px 10px;
+   font-size:0.2rem;
+  }
 `
 class Table extends React.Component {
   tooglePopupEdit(taskId, creatorId) {
