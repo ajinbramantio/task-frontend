@@ -137,6 +137,11 @@ class EditTask extends React.Component {
 
   render() {
     // console.log(this.props.data)
+    const totalPrice = new Intl.NumberFormat('IND', {
+      style: 'currency',
+      currency: 'IDR',
+      maximumSignificantDigits: 3
+    }).format(this.state.totalPrice)
 
     return (
       <React.Fragment>
@@ -176,48 +181,43 @@ class EditTask extends React.Component {
                         name: e.target.value
                       })
                     }}
+                    required
                   />
                 </FieldWrapper>
 
                 <FieldWrapper>
                   <label htmlFor="">Items :</label>
                   <InputText
-                    type="text"
+                    type="number"
                     name=""
                     value={this.state.totalItem}
                     onChange={e => {
                       this.setState({
-                        totalItem: e.target.value
+                        totalItem: e.target.value,
+                        totalPrice: e.target.value * this.state.price
                       })
                     }}
+                    required
                   />
                 </FieldWrapper>
 
                 <FieldWrapper>
                   <label htmlFor="">Price :</label>
                   <InputText
-                    type="text"
+                    type="number"
                     name=""
                     value={this.state.price}
                     onChange={e => {
                       this.setState({
-                        price: e.target.value
+                        price: e.target.value,
+                        totalPrice: e.target.value * this.state.totalItem
                       })
                     }}
                   />
                 </FieldWrapper>
                 <FieldWrapper>
                   <label htmlFor="">Total Price :</label>
-                  <InputText
-                    type="text"
-                    name=""
-                    value={this.state.totalPrice}
-                    onChange={e => {
-                      this.setState({
-                        totalPrice: e.target.value
-                      })
-                    }}
-                  />
+                  <InputText type="text" name="" value={totalPrice} readOnly />
                 </FieldWrapper>
                 <FieldWrapper>
                   <label htmlFor="">Date :</label>

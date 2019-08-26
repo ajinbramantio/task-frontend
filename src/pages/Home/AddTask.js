@@ -217,7 +217,8 @@ class AddTask extends React.Component {
                     value={this.state.totalItem}
                     onChange={event => {
                       this.setState({
-                        totalItem: event.target.value
+                        totalItem: event.target.value,
+                        totalPrice: event.target.value * this.state.price
                       })
                     }}
                     //required
@@ -267,7 +268,10 @@ class AddTask extends React.Component {
                 <CreateButton>Create</CreateButton>
                 <CancelButton
                   onClick={() => {
-                    this.Popup()
+                    const show = {
+                      showPopup: !this.props.showPopup
+                    }
+                    this.Popup(show)
                   }}
                   text="Close Me"
 
