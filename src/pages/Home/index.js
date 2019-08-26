@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import Styled from '@emotion/styled'
 import AddTask from './AddTask'
-import { Add_Task } from '../../modules/task/actions'
+import { start_Task } from '../../modules/task/actions'
 import { LogoutUser, GetUser } from '../../modules/user/actions'
 
 import Table from './Table'
@@ -135,7 +135,7 @@ class Home extends React.Component {
       const dataAddTask = {
         showPopup: !this.props.showPopup
       }
-      this.props.dispatch(Add_Task(dataAddTask))
+      this.props.dispatch(start_Task(dataAddTask))
     }
   }
   componentDidMount() {

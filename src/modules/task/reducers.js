@@ -30,15 +30,19 @@ export default (state = initialState, action) => {
         showPopupAdd: action.showPopup
       }
     case ADDTASK_SUCCESS:
+      // console.log(action)
+
       return {
         ...state,
-        showPopup: false,
+        showPopupAdd: false,
         isLoading: false,
         Error: false,
         message: action.message,
         data: [action.data]
       }
     case CANCEL_ADDTASK:
+      // console.log(action)
+
       return {
         ...state,
         showPopupAdd: false,
@@ -72,7 +76,7 @@ export default (state = initialState, action) => {
         isLoading: true
       }
     case TASKUPDATE_SUCCESS:
-      console.log(action)
+      // console.log(action)
       return {
         ...state,
         showPopupEdit: false,

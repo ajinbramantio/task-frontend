@@ -114,7 +114,6 @@ class EditTask extends React.Component {
     }
   }
   Popup(data, showPop) {
-    console.log(showPop)
     if (showPop !== undefined) {
       const dataEditTask = {
         ...data,

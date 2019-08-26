@@ -12,20 +12,25 @@ export const CANCEL_TASKEDIT = '@task/CANCEL_TASKEDIT'
 
 export const TASKDELETE_SUCCESS = '@task/TASKDELETE_SUCCESS'
 
-export const Add_Task = data => {
+export const start_Task = data => {
   return async dispatch => {
     dispatch({
       type: ADDTASK_STARTED,
       showPopup: data.showPopup
     })
+  }
+}
+export const Add_Task = data => {
+  return async dispatch => {
+    // console.log(data.showPopup)
 
-    if (data) {
+    if (data.showPopup === true) {
       const token = localStorage.getItem('AUTH_TOKEN')
       const decoded = decode(token)
-      // console.log(data)
+
       const newData = {
         name: data.name,
-        nameItems: data.NameItems,
+        nameItems: data.nameItems,
         totalItem: data.totalItem,
         price: data.price,
         totalPrice: data.totalPrice,
@@ -42,13 +47,15 @@ export const Add_Task = data => {
           }
         }
       )
-      // console.log(response.data)
       dispatch({
         type: ADDTASK_SUCCESS,
         data: response.data.data,
-        message: response.data.message
+        message: response.data.message,
+        showPopup: !data.showPopup
       })
     } else {
+      // console.log('coba')
+
       dispatch({
         type: CANCEL_ADDTASK,
         showPopup: !data.showPopup
